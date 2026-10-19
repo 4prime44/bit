@@ -8,16 +8,17 @@ datasource db {
 }
 
 model Event {
-  id           String        @id @default(cuid())
-  title        String
-  description  String?
-  dates        String // JSON: string[] w formacie rrrr-mm-dd
-  startMinute  Int
-  endMinute    Int
-  slotMinutes  Int
-  finalWindow  String? // JSON: TimeWindow
-  createdAt    DateTime      @default(now())
-  participants Participant[]
+  id             String        @id @default(cuid())
+  title          String
+  description    String?
+  dates          String // JSON: string[] w formacie rrrr-mm-dd
+  startMinute    Int
+  endMinute      Int
+  slotMinutes    Int
+  finalWindow    String? // JSON: TimeWindow
+  adminTokenHash String
+  createdAt      DateTime      @default(now())
+  participants   Participant[]
 }
 
 model Participant {
@@ -25,9 +26,13 @@ model Participant {
   name      String
   eventId   String
   event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  pinHash   String?
+  tokenHash String   @unique
   slots     Slot[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@unique([eventId, name])
 }
 
 model Slot {
