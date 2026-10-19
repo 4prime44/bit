@@ -1,0 +1,13 @@
+{
+"compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "strict": true,
+    "noUncheckedIndexedAccess": true, // arr[0] ma typ T | undefined, co wymusza sprawdzanie
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "noEmit": true
+}
+}
