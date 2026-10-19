@@ -75,13 +75,13 @@ eventsRouter.post('/:id/participants', async (req, res)=>{
     });
     res.status(201).json({ participant:toParticipantDto(participant), token });
 });
-// ── PUT …/participants/me/availability: zastąp CAŁĄ moją dostępność ──
+// ── PUT …/participants/me/availability:
 eventsRouter.put('/:id/participants/me/availability', async (req, res)=>{
     const event=await findEventOr404(req.params.id);
-    const me=await requireParticipant(req, event.id); // 401, jeśli brak/zły token
+    const me=await requireParticipant(req, event.id);
     const { slots }=availabilitySchema.parse(req.body);
-    const allowed=new Set(buildSlotKeys(parseGrid(event))); // wszystkie poprawne pola tej siatki
-    const invalid=slots.filter((s)=>!allowed.has(s)); // Set.has jest O(1), więc szybko
+    const allowed=new Set(buildSlotKeys(parseGrid(event)));
+    const invalid=slots.filter((s)=>!allowed.has(s));
     if (invalid.length>0) {
         throw new HttpError(400, 'Część slotów nie należy do tego wydarzenia', invalid.slice(0, 5));
     }
@@ -90,31 +90,30 @@ eventsRouter.put('/:id/participants/me/availability', async (req, res)=>{
         where:{ id:me.id },
         data:{
             slots:{
-                deleteMany:{}, // 1) usuń WSZYSTKIE moje stare sloty
-                create:[...new Set(slots)].map((slot)=>({ slot })), // 2) wstaw nowe (bez duplikatów)
+                deleteMany:{},
+                create:[...new Set(slots)].map((slot)=>({ slot })), 
             },
         },
         include:{ slots:true },
     });
     res.json(toParticipantDto(participant));
 });
-// ── DELETE …/participants/me: usuń mnie (i moje sloty) ────────────
+// ── DELETE …/participants/me: usuń mnie (i moje sloty)
 eventsRouter.delete('/:id/participants/me', async (req, res)=>{
     const event=await findEventOr404(req.params.id);
     const me=await requireParticipant(req, event.id);
-    await prisma.participant.delete({ where:{ id:me.id } }); // sloty znikną dzięki onDelete: Cascade
-    res.status(204).end(); // 204 No Content = sukces bez body
+    await prisma.participant.delete({ where:{ id:me.id } }); 
+    res.status(204).end();
 });
-// ── PATCH /api/events/:id: twórca zatwierdza termin (opcjonalne) ──
+// ── PATCH /api/events/:id: twórca zatwierdza termin
 eventsRouter.patch('/:id', async (req, res)=>{
     const event=await findEventOr404(req.params.id);
-    const adminToken=req.header('x-admin-token'); // sekretny nagłówek twórcy
+    const adminToken=req.header('x-admin-token');
     if (!adminToken || sha256(adminToken)!==event.adminTokenHash) {
-        throw new HttpError(403, 'Tylko twórca może zatwierdzić termin'); // 403 = wiem, kim jesteś, ale nie możesz
+        throw new HttpError(403, 'Tylko twórca może zatwierdzić termin');
     }
     const { finalWindow }=finalizeSchema.parse(req.body);
     if (finalWindow) {
-        // sprawdzamy, czy okno mieści się w siatce
         const grid=parseGrid(event);
         const fits=grid.dates.includes(finalWindow.date)
             && finalWindow.startMinute>=grid.startMinute
