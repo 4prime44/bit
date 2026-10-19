@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Event {
+  id           String        @id @default(cuid())
+  title        String
+  description  String?
+  dates        String // JSON: string[] w formacie rrrr-mm-dd
+  startMinute  Int
+  endMinute    Int
+  slotMinutes  Int
+  finalWindow  String? // JSON: TimeWindow
+  createdAt    DateTime      @default(now())
+  participants Participant[]
+}
+
+model Participant {
+  id        String   @id @default(cuid())
+  name      String
+  eventId   String
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  slots     Slot[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Slot {
+  participantId String
+  participant   Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+  slot          String // "RRRR-MM-DDTGG:MM"
+
+  @@id([participantId, slot])
+}
