@@ -18,7 +18,7 @@ export function parseGrid(event: { dates: string; startMinute: number; endMinute
         slotMinutes: event.slotMinutes,
     };
 }
-//mapowanie wierszy z bazy na DTO dla frontu
+//mapowanie wierszy z bazy na DTO 
 export function toParticipantDto(p: ParticipantRow): ParticipantDto {
 return {
     id: p.id,
