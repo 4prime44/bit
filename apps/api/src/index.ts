@@ -1,13 +1,7 @@
-import express from 'express';
-import { eventsRouter } from './routes/events';
-import { errorHandler } from './lib/errors';
+import { createApp } from './app';
 
 const PORT=Number(process.env.PORT ?? 3000);
-const app=express();
-
-app.use(express.json());
-app.use('/api/events', eventsRouter);
-app.use(errorHandler);
+const app=createApp();
 
 app.listen(PORT, ()=>{
     console.log(`API: http://localhost:${PORT}`);
