@@ -1,0 +1,7 @@
+.picker { display: grid; grid-template-columns: repeat(7, minmax(2.5rem, 1fr)); gap: .3rem; max-width: 26rem; }
+.weekday { text-align: center; font-size: .75rem; color: var(--muted); }
+.day { font: inherit; min-height: 2.5rem; border-radius: 8px; border: 1px solid var(--border);
+background: var(--surface); color: var(--text); cursor: pointer; }
+.day[aria-pressed='true'] { background: var(--accent); border-color: var(--accent); color: var(--
+accent-text); font-weight: 700; }
+.day:disabled { opacity: .35; cursor: not-allowed; }
