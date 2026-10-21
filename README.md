@@ -35,3 +35,4 @@ Strefy czasowe, WebSockety zamiast odpytywania, konta i historia wydarzeń, rate
 ## Wykorzystanie AI
 Do przygotowania planu projektu użyłem Claude (Anthropic), również do wygenerowania podstawowych informacji jak np to readmy ( nie chcialo mi sie go pisac XD).
 Kod napisałem samodzielnie na ich podstawie, rozumiem każdą jego część i mogę ją wyjaśnić.
+A i kod css wygenerowany przez AI
