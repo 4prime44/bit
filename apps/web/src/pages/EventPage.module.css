@@ -1,0 +1,9 @@
+.panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: start; }
+@media (max-width: 640px) { .panels { grid-template-columns: 1fr; } }
+/* telefon: jedna kolumna */
+.tabs { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+.tabs button { font: inherit; padding: .7rem; border: 0; background: var(--surface); color: var(--text); }
+.tabs button[aria-selected='true'] { background: var(--accent); color: var(--accent-text); font-weight: 700; }
+.pager { display: flex; align-items: center; justify-content: center; gap: 1rem; }
+.final { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; justify-content: space-
+between; border-color: var(--accent); }

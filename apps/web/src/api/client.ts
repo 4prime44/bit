@@ -2,7 +2,7 @@ import type { CreateEventInput, EventDto, JoinInput, ParticipantDto, TimeWindow 
 '@bit/shared';
 
 export class ApiError extends Error {
-    status:Number;
+    status:number;
     constructor(status:number,message:string){
         super(message);
         this.status=status
@@ -13,16 +13,20 @@ interface RequestOptions{
     body?:unknown;
     headers?:Record<string,string>;
 }
-async function request<T>(path:string,options:RequestOptions={}):Promise<T>{
-    const res= await fetch('/api${path}',{
-        method:options.method?? 'GET',
-        headers: {'Content-Type': 'application/json', ...options.headers},
-        body:options.body===undefined?undefined : JSON.stringify(options.body),
+//_ do wyciszenia błedu unread
+async function request<T>(_path: string, options: RequestOptions = {}): Promise<T> {
+    const res = await fetch(`/api${_path}`, { 
+        method: options.method ?? 'GET',
+        headers: { 'Content-Type': 'application/json', ...options.headers },
+        body: options.body === undefined ? undefined : JSON.stringify(options.body),
     });
-    if (res.status===204) return undefined as T;
-    const data=await res.json().catch(()=>null);
-    if(!res.ok){
-        throw new ApiError(res.status,data?.error??'Błąd serwera (${res.status})');
+
+    if (res.status === 204) return undefined as T;
+    
+    const data = await res.json().catch(() => null);
+    
+    if (!res.ok) {
+        throw new ApiError(res.status, data?.error ?? `Błąd serwera (${res.status})`);
     }
     return data as T;
 }

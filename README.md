@@ -33,6 +33,6 @@ bez stref czasowych (świadome uproszczenie, wszyscy w PL).
 ## Co bym zrobił dalej
 Strefy czasowe, WebSockety zamiast odpytywania, konta i historia wydarzeń, rate limiting PIN-u.
 ## Wykorzystanie AI
-Do przygotowania planu projektu użyłem Claude (Anthropic), również do wygenerowania podstawowych informacji jak np to readmy ( nie chcialo mi sie go pisac XD).
-Kod napisałem samodzielnie na ich podstawie, rozumiem każdą jego część i mogę ją wyjaśnić.
-A i kod css wygenerowany przez AI
+Do przygotowania planu projektu użyłem Claude (Anthropic), również do wygenerowania podstawowych informacji jak np to readme( nie chcialo mi sie go pisac XD).
+Kod napisałem samodzielnie na ich podstawie (wspomagałem się czasami przy jakis błędach, czasami przy jakis problemach (pointerdown zeby nie popelnić błedu) ), rozumiem każdą jego część i mogę ją wyjaśnić.
+A i kod css wygenerowany przez AI + testy frontend

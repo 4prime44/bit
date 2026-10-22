@@ -1,0 +1,17 @@
+.grid { display: grid; user-select: none; }
+.row { display: contents; }
+.dayHeader { text-align: center; font-size: .8rem; font-weight: 600; padding: .3rem 0; }
+.time { font-size: .72rem; color: var(--muted); text-align: right; padding-right: .4rem; line-height: 1; }
+.cell {
+height: 1.3rem;
+background: var(--surface);
+border-left: 1px solid var(--border);
+border-top: 1px dashed var(--border-soft);
+cursor: pointer;
+touch-action: none;
+}
+.hourStart { border-top: 1px solid var(--border); }
+
+.selected { background: var(--accent); }
+.cell:focus-visible { outline: 3px solid var(--focus); outline-offset: -3px; position: relative; }
+@media (pointer: coarse) { .cell { height: 1.8rem; } } 
